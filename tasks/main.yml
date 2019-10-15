@@ -1,0 +1,16 @@
+---
+# Title: role-zabbix-4.0LTS
+#
+# Author: bitfinity-nl
+# File: tasks/main.yml
+#
+# Description:
+#   Playbook for deploying Zabbix 4.0LTS 
+#   server/agent/proxy on Ubuntu 18.04LTS.
+#
+
+- name: "For OS: Ubuntu 18.04LTS, Arch: amd64"
+  import_tasks: ubt-1804-amd64.yml
+  when:
+    - ansible_distribution_version == "18.04"
+    - ansible_architecture == "x86_64"

@@ -1,0 +1,82 @@
+---
+# Title: role-zabbix-4.0LTS
+#
+# Author: bitfinity-nl
+# File: tasks/server/zabbix-server.yml
+#
+# Description:
+#   Playbook for deploying Zabbix 4.0LTS 
+#   server/agent/proxy on Ubuntu 18.04LTS.
+#
+
+- name: "Install Zabbix repository"
+  apt:
+    deb: {{ zbx_repository }}
+    state: present
+
+- name: "Install Zabbix server, frontend, agent"
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - php-bcmath
+    - php-mbstring
+    - php-xmlwriter
+    - php-xmlreader
+    - snmp
+    - snmp-mibs-downloader
+    - zabbix-server-mysql
+    - zabbix-frontend-php
+
+- name: "Create initial database"
+  mysql_db:
+    name: "{{ zbx_mysql_dbname }}"
+    encoding: utf8
+    state: present
+    login_user: "{{ zbx_mysql_root }}"
+    login_password: "{{ zbx_mysql_root_pwd }}"
+  notify:
+    - import zabbix-dbschema
+
+- name: "Create initial database user"
+  mysql_user:
+    name: "{{ zbx_dbuser }}"
+    password: "{{ zbx_dbpass }}"
+    priv: "{{ zbx_mysql_dbname }}.*:ALL,GRANT"
+    state: present
+    login_user: "{{ zbx_mysql_root }}"
+    login_password: "{{ zbx_mysql_root_pwd }}"
+
+- name: "Copy template zabbix_server.conf.j2 to /etc/zabbix/zabbix_server.conf"
+  template:
+    src: server/zabbix_server.conf.j2
+    dest: /etc/zabbix/zabbix_server.conf
+    owner: root
+    group: root
+    mode: "0644"
+    backup: yes
+  notify:
+    - restart zabbix-server
+
+- name: "Copy template zabbix.conf.php.j2 to /etc/zabbix/web/zabbix.conf.php"
+  template:
+    src: zabbix.conf.php.j2
+    dest: /etc/zabbix/web/zabbix.conf.php
+    owner: www-data
+    group: www-data
+    mode: "0644"
+    backup: yes
+
+- name: "Configure UFW firewall"
+  ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+  with_items:
+    - { port: '10050', proto: 'tcp', desc: 'Allow traffic from Zabbix server to Zabbix Agent (Passive) on port 10050/tcp' }
+    - { port: '10051', proto: 'tcp', desc: 'Allow traffic from Zabbix agent to Zabbix server (Active) on port 10051/tcp' }
+    - { port: '443', proto: 'tcp', desc: 'Allow traffic from Zabbix frontend on port 443/tcp' }
+
+- name: "Install apache2"
+  import_tasks: server/apache2.yml

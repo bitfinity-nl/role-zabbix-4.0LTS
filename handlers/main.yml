@@ -1,0 +1,30 @@
+---
+# Title: role-zabbix-4.0LTS
+#
+# Author: bitfinity-nl
+# File: handlers/main.yml
+#
+# Description:
+#   Playbook for deploying Zabbix 4.0LTS 
+#   server/agent/proxy on Ubuntu 18.04LTS.
+#
+
+- name: "import zabbix-dbschema"
+  mysql_db:
+    name: zabbix
+    state: import
+    target: /usr/share/doc/zabbix-server-mysql/create.sql.gz
+    login_user: "{{ zbx_mysql_zbx_user }}"
+    login_password: "{{ zbx_mysql_zbx_pass }}"
+
+- name: "restart zabbix-server"
+  service:
+    name: zabbix-server
+    state: restarted
+    enabled: yes
+
+- name: "restart apache2"
+  service:
+    name: apache2
+    state: restarted
+    enabled: yes

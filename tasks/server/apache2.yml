@@ -1,0 +1,17 @@
+---
+# Title: role-zabbix-4.0LTS
+#
+# Author: bitfinity-nl
+# File: defaults/main.yml
+#
+# Description:
+#   Playbook for deploying Zabbix 4.0LTS 
+#   server/agent/proxy on Ubuntu 18.04LTS.
+#
+
+- name: "Apache2 enable SSL module"
+  apache2_module:
+    state: present
+    name: ssl
+  notify:
+    - restart apache2
