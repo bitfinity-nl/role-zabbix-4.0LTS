@@ -22,8 +22,8 @@
 #   zbx_mysql_zbx_pass : 'ChangePasswordHere'                                                                                        # Set Zabbix MySQL database username pasword.
 #
 zbx_repository     : 'https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-3+bionic_all.deb'
-zbx_time_zone      : 'Europe/Amsterdam' 
-
+zbx_timezone       : 'Europe/Amsterdam' 
+zbx_servername     : '{{ ansible_hostname }}'
 
 # -- Zabbix MySQL database settings --
 #
@@ -75,13 +75,13 @@ zbx_mysql_zbx_pass : 'ChangePasswordHere'
 #   zbx_srv_startalerters           : '3'  # Number of pre-forked instances of alerters.
 #
 
-#zbx_srv_listenport          : '10051' 
+zbx_srv_listenport          : '10051' 
 #zbx_srv_sourceip            : ''
 #zbx_srv_logtype             : 'file'
 #zbx_srv_logfile             : '/tmp/zabbix_server.log'
 #zbx_srv_logfilesize         : '1'
 #zbx_srv_debuglevel          : '3'
-#zbx_srv_pidfile             : '/tmp/zabbix_server.pid'
+zbx_srv_pidfile             : '/tmp/zabbix_server.pid'
 #zbx_srv_socketdir           : '/tmp'
 zbx_srv_DBHost              : 'localhost'
 zbx_srv_DBName              : '{{ zbx_mysql_dbname }}'

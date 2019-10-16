@@ -36,6 +36,7 @@
 # LogFile=
 
 LogFile=/var/log/zabbix/zabbix_server.log
+#LogFile=/tmp/zabbix_server.log
 
 ### Option: LogFileSize
 #	Maximum size of log file in MB.
@@ -45,8 +46,6 @@ LogFile=/var/log/zabbix/zabbix_server.log
 # Range: 0-1024
 # Default:
 # LogFileSize=1
-
-LogFileSize=0
 
 ### Option: DebugLevel
 #	Specifies debug level:
@@ -68,18 +67,15 @@ LogFileSize=0
 # Mandatory: no
 # Default:
 # PidFile=/tmp/zabbix_server.pid
-
-PidFile=/var/run/zabbix/zabbix_server.pid
+#PidFile={{ zbx_srv_pidfile }}
 
 ### Option: SocketDir
 #	IPC socket directory.
-#       Directory to store IPC sockets used by internal Zabbix services.
+#		Directory to store IPC sockets used by internal Zabbix services.
 #
 # Mandatory: no
 # Default:
 # SocketDir=/tmp
-
-SocketDir=/var/run/zabbix
 
 ### Option: DBHost
 #	Database host name.
@@ -89,6 +85,7 @@ SocketDir=/var/run/zabbix
 # Mandatory: no
 # Default:
 # DBHost=localhost
+DBHost={{ zbx_srv_DBHost }}
 
 ### Option: DBName
 #	Database name.
@@ -97,7 +94,7 @@ SocketDir=/var/run/zabbix
 # Default:
 # DBName=
 
-DBName={{ zbx_mysql_dbname }}
+DBName={{ zbx_srv_DBName }}
 
 ### Option: DBSchema
 #	Schema name. Used for IBM DB2 and PostgreSQL.
@@ -113,7 +110,7 @@ DBName={{ zbx_mysql_dbname }}
 # Default:
 # DBUser=
 
-DBUser={{ zbx_mysql_zbx_user }}
+DBUser={{ zbx_srv_DBUser }}
 
 ### Option: DBPassword
 #	Database password.
@@ -122,7 +119,7 @@ DBUser={{ zbx_mysql_zbx_user }}
 # Mandatory: no
 # Default:
 # DBPassword=
-DBPassword={{ zbx_mysql_zbx_pass }}
+DBPassword={{ zbx_srv_DBPassword }}
 
 ### Option: DBSocket
 #	Path to MySQL socket.
@@ -191,7 +188,7 @@ DBPassword={{ zbx_mysql_zbx_pass }}
 
 ### Option: StartIPMIPollers
 #	Number of pre-forked instances of IPMI pollers.
-#       The IPMI manager process is automatically started when at least one IPMI poller is started.
+#		The IPMI manager process is automatically started when at least one IPMI poller is started.
 #
 # Mandatory: no
 # Range: 0-1000
@@ -200,7 +197,7 @@ DBPassword={{ zbx_mysql_zbx_pass }}
 
 ### Option: StartPreprocessors
 #	Number of pre-forked instances of preprocessing workers.
-#       The preprocessing manager process is automatically started when preprocessor worker is started.
+#		The preprocessing manager process is automatically started when preprocessor worker is started.
 #
 # Mandatory: no
 # Range: 1-1000
@@ -235,6 +232,7 @@ DBPassword={{ zbx_mysql_zbx_pass }}
 # Range: 0-1000
 # Default:
 # StartPingers=1
+StartPingers={{ zbx_srv_startpingers }}
 
 ### Option: StartDiscoverers
 #	Number of pre-forked instances of discoverers.
@@ -242,7 +240,7 @@ DBPassword={{ zbx_mysql_zbx_pass }}
 # Mandatory: no
 # Range: 0-250
 # Default:
-# StartDiscoverers=1
+StartDiscoverers={{ zbx_srv_startdiscoverers }}
 
 ### Option: StartHTTPPollers
 #	Number of pre-forked instances of HTTP pollers.
@@ -354,8 +352,6 @@ DBPassword={{ zbx_mysql_zbx_pass }}
 # Default:
 # SNMPTrapperFile=/tmp/zabbix_traps.tmp
 
-SNMPTrapperFile=/var/log/snmptrap/snmptrap.log
-
 ### Option: StartSNMPTrapper
 #	If 1, SNMP trapper process is started.
 #
@@ -409,6 +405,7 @@ SNMPTrapperFile=/var/log/snmptrap/snmptrap.log
 # Range: 128K-8G
 # Default:
 # CacheSize=8M
+CacheSize={{ zbx_srv_CacheSize }}
 
 ### Option: CacheUpdateFrequency
 #	How often Zabbix will perform update of configuration cache, in seconds.
@@ -514,8 +511,6 @@ Timeout=4
 # Default:
 # AlertScriptsPath=${datadir}/zabbix/alertscripts
 
-AlertScriptsPath=/usr/lib/zabbix/alertscripts
-
 ### Option: ExternalScripts
 #	Full path to location of external scripts.
 #	Default depends on compilation options.
@@ -525,8 +520,6 @@ AlertScriptsPath=/usr/lib/zabbix/alertscripts
 # Default:
 # ExternalScripts=${datadir}/zabbix/externalscripts
 
-ExternalScripts=/usr/lib/zabbix/externalscripts
-
 ### Option: FpingLocation
 #	Location of fping.
 #	Make sure that fping binary has root ownership and SUID flag set.
@@ -534,8 +527,6 @@ ExternalScripts=/usr/lib/zabbix/externalscripts
 # Mandatory: no
 # Default:
 # FpingLocation=/usr/sbin/fping
-
-FpingLocation=/usr/bin/fping
 
 ### Option: Fping6Location
 #	Location of fping6.
@@ -545,8 +536,6 @@ FpingLocation=/usr/bin/fping
 # Mandatory: no
 # Default:
 # Fping6Location=/usr/sbin/fping6
-
-Fping6Location=/usr/bin/fping6
 
 ### Option: SSHKeyLocation
 #	Location of public and private keys for SSH checks and actions.
@@ -599,6 +588,14 @@ LogSlowQueries=3000
 # Range: 1-3600
 # Default:
 # ProxyDataFrequency=1
+
+### Option: StartLLDProcessors
+#	Number of pre-forked instances of low level discovery processors.
+#
+# Mandatory: no
+# Range: 1-100
+# Default:
+# StartLLDProcessors=2
 
 ### Option: AllowRoot
 #	Allow the server to run as 'root'. If disabled and the server is started by 'root', the server
@@ -672,6 +669,7 @@ LogSlowQueries=3000
 # Mandatory: no
 # Default:
 # StatsAllowedIP=
+StatsAllowedIP=127.0.0.1
 
 ####### LOADABLE MODULES #######
 

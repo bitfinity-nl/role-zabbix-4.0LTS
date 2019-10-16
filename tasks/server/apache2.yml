@@ -14,4 +14,4 @@
     state: present
     name: ssl
   notify:
-    - restart apache2
+    - restart_apache2

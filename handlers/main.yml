@@ -10,21 +10,24 @@
 #
 
 - name: "import zabbix-dbschema"
-  mysql_db:
-    name: zabbix
-    state: import
-    target: /usr/share/doc/zabbix-server-mysql/create.sql.gz
-    login_user: "{{ zbx_mysql_zbx_user }}"
-    login_password: "{{ zbx_mysql_zbx_pass }}"
+  raw: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -u {{ zbx_mysql_root }} -p{{ zbx_mysql_root_pwd }} {{ zbx_mysql_dbname }}"
 
-- name: "restart zabbix-server"
+- name: "reboot_server"
+  reboot:
+
+- name: "enable_restart_zabbix-server"
   service:
-    name: zabbix-server
+    name: "{{ item }}"
     state: restarted
     enabled: yes
+    masked: no
+  with_items:
+    - zabbix-server
+    - zabbix-agent
 
-- name: "restart apache2"
+- name: "restart_apache2"
   service:
     name: apache2
     state: restarted
     enabled: yes
+    masked: no
