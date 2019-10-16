@@ -40,7 +40,7 @@ LogFile=/var/log/zabbix/zabbix_agentd.log
 # Default:
 # LogFileSize=1
 
-LogFileSize=0
+LogFileSize={{ zbx_agt_LogFileSize }}
 
 ### Option: DebugLevel
 #	Specifies debug level:
@@ -71,6 +71,7 @@ LogFileSize=0
 # Mandatory: no
 # Default:
 # EnableRemoteCommands=0
+EnableRemoteCommands={{ zbx_agt_EnableRemoteCommands }}
 
 ### Option: LogRemoteCommands
 #	Enable logging of executed shell commands as warnings.
@@ -80,6 +81,7 @@ LogFileSize=0
 # Mandatory: no
 # Default:
 # LogRemoteCommands=0
+LogRemoteCommands={{ zbx_agt_LogRemoteCommands }}
 
 ##### Passive checks related
 
@@ -95,7 +97,7 @@ LogFileSize=0
 # Default:
 # Server=
 
-Server=127.0.0.1
+Server={{ zbx_agt_Server }}
 
 ### Option: ListenPort
 #	Agent will listen on this port for connections from the server.
@@ -136,7 +138,7 @@ Server=127.0.0.1
 # Default:
 # ServerActive=
 
-ServerActive=127.0.0.1
+ServerActive={{ zbx_agt_ServerActive }}
 
 ### Option: Hostname
 #	Unique, case sensitive hostname.
@@ -147,7 +149,7 @@ ServerActive=127.0.0.1
 # Default:
 # Hostname=
 
-Hostname=Zabbix server
+Hostname={{ zbx_agt_Hostname }}
 
 ### Option: HostnameItem
 #	Item used for generating Hostname if it is undefined. Ignored if Hostname is defined.

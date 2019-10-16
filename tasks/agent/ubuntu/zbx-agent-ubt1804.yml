@@ -1,0 +1,51 @@
+---
+# Title: role-zabbix-4.0LTS
+#
+# Author: bitfinity-nl
+# File: defaults/main.yml
+#
+# Description:
+#   Playbook for deploying Zabbix 4.0LTS 
+#   server/agent/proxy on Ubuntu 18.04LTS.
+#
+# Comment:
+#   Override settings here, in your playbook or in your group_vars.  
+
+- name: "Download & Install deb package"
+  apt:
+    deb: "{{ zbx_repository }}"
+    state: present
+
+- name: "Install Zabbix-agent"
+  apt:
+    name: zabbix-agent
+    state: present
+    update_cache: yes
+
+- name: "Configure Zabbix-agent"
+  template:
+    src:  agent/zabbix_agentd.conf.j2
+    dest: /etc/zabbix/zabbix_agentd.conf
+    backup: yes
+  notify:
+    - service_restart_zabbix_agent
+
+- name: "enable zabbix agent on startup"
+  systemd:
+    name: zabbix-agent
+    state: started
+    enabled: yes
+
+- name: "Allow traffic from Zabbix server to Zabbix Agent (Passive) on port 10050/tcp"
+  ufw:
+    rule: allow
+    port: 10050
+    proto: tcp
+    from_ip: "{{ zbx_conf_server }}"
+
+- name: "Allow traffic from Zabbix agent to Zabbix server (Active) on port 10051/tcp"
+  ufw:
+    rule: allow
+    port: 10051
+    proto: tcp
+    to_ip: "{{ zbx_conf_activeserver }}"
