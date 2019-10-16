@@ -79,6 +79,16 @@
     - { src: 'server/zabbix_server.conf.j2', dest: '/etc/zabbix/zabbix_server.conf', owner: 'root', group: 'root', mode: '0644' }
     - { src: 'agent/zabbix_agentd.conf.j2', dest: '/etc/zabbix/zabbix_agentd.conf', owner: 'root', group: 'root', mode: '0644' }
 
+- name: "Configure Zabbix Agent with 127.0.0.1 to monitor itself"
+  replace:
+    path: /etc/zabbix/zabbix_agentd.conf
+    regexp: "{{ item.find }}"
+    replace: "{{ item.repl }}"
+  with_items:
+    - { find: 'Server={{ zbx_server }}', repl: 'Server=127.0.0.1,{{ zbx_server }}' }
+    - { find: 'ServerActive={{ zbx_active_server }}', repl: 'ServerActive=127.0.0.1,{{ zbx_active_server }}' }
+  notify:
+    - restart_zabbix_agent
 
 - name: "Configure UFW firewall"
   ufw:

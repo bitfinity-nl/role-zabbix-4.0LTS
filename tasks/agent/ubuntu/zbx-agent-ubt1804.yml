@@ -28,7 +28,7 @@
     dest: /etc/zabbix/zabbix_agentd.conf
     backup: yes
   notify:
-    - service_restart_zabbix_agent
+    - restart_zabbix_agent
 
 - name: "enable zabbix agent on startup"
   systemd:
@@ -39,13 +39,13 @@
 - name: "Allow traffic from Zabbix server to Zabbix Agent (Passive) on port 10050/tcp"
   ufw:
     rule: allow
-    port: 10050
+    port: "10050"
     proto: tcp
-    from_ip: "{{ zbx_conf_server }}"
+    from_ip: "{{ zbx_agt_Server }}"
 
 - name: "Allow traffic from Zabbix agent to Zabbix server (Active) on port 10051/tcp"
   ufw:
     rule: allow
-    port: 10051
+    port: "10051"
     proto: tcp
-    to_ip: "{{ zbx_conf_activeserver }}"
+    to_ip: "{{ zbx_agt_ServerActive }}"

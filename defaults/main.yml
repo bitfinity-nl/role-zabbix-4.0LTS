@@ -12,28 +12,33 @@
 #   Override settings here, in your playbook or in your group_vars.   
 #
 
+
 # -- Zabbix server - General settings -- 
 #
 # Variable(s): 
 #   zbx_repository     : 'https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-3+bionic_all.deb'  # Set Url to Zabbix repository 
-#   zbx_mysql_root     : 'root'                                                                                                      # Set Administrative MySQL account.
-#   zbx_mysql_root_pwd : 'RootPasswordHere'                                                                                          # Set Administrative MySQL account password.
-#   zbx_mysql_zbx_user : 'zabbix'                                                                                                    # Set Zabbix MySQL database username.
-#   zbx_mysql_zbx_pass : 'ChangePasswordHere'                                                                                        # Set Zabbix MySQL database username pasword.
+#   zbx_timezone       : 'Europe/Amsterdam'                                                                                          # Set Timezone.
+#   zbx_servername     : '{{ ansible_hostname }}'                                                                                    # Set servername of the installation.
+#   zbx_server         : '{{ def_zbx_server }}'                                                                                      # Set IP or hostname of the Zabbix server.
+#   zbx_active_server  : '{{ def_zbx_active_server }}'                                                                               # Set IP or hostname of the Zabbix Active server.
+#   zbx_type           : 'agent'                                                                                                     # Set installation type to agent, server, proxy (default=agent).
 #
 zbx_repository     : 'https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-3+bionic_all.deb'
 zbx_timezone       : 'Europe/Amsterdam' 
 zbx_servername     : '{{ ansible_hostname }}'
 zbx_server         : '{{ def_zbx_server }}'
 zbx_active_server  : '{{ def_zbx_active_server }}'
+zbx_type           : 'agent'
+
 
 # -- Zabbix MySQL database settings --
 #
 # Variable(s): 
-#   zbx_mysql_root     : 'root'                                                                                                      # Set Administrative MySQL account.
-#   zbx_mysql_root_pwd : 'RootPasswordHere'                                                                                          # Set Administrative MySQL account password.
-#   zbx_mysql_zbx_user : 'zabbix'                                                                                                    # Set Zabbix MySQL database username.
-#   zbx_mysql_zbx_pass : 'ChangePasswordHere' 
+#   zbx_mysql_dbname   : 'zabbix'              # Set Zabbix database name.
+#   zbx_mysql_root     : 'root'                # Set Administrative MySQL account.
+#   zbx_mysql_root_pwd : 'RootPasswordHere'    # Set Administrative MySQL account password.
+#   zbx_mysql_zbx_user : 'zabbix'              # Set Zabbix MySQL database username.
+#   zbx_mysql_zbx_pass : 'ChangePasswordHere'  # Set Zabbix MySQL database password. 
 #
 zbx_mysql_dbname   : 'zabbix'
 zbx_mysql_root     : '{{ def_mysql_user }}'
@@ -111,15 +116,20 @@ zbx_srv_startdiscoverers        : '1'
 zbx_srv_CacheSize               : '64M'
 
 
-
-
 # -- Zabbix Agent Ubuntu - zabbix_agent.conf.j2 --
+#
+# Variable(s):
+#   zbx_agt_LogFileSize            : '5'                       # Maximum size of log file in MB.
+#   zbx_agt_Server                 : '127.0.0.1'               # Set IP or hostname of Zabbix (proxy) servers.
+#   zbx_agt_ServerActive           : '127.0.0.1'               # Set IP or hostname of Zabbix (proxy) servers. 
+#   zbx_agt_Hostname               : '{{ ansible_hostname }}'
+#   zbx_agt_EnableRemoteCommands   : '1'
+#   zbx_agt_LogRemoteCommands      : '0'
+#
+zbx_agt_LogFileSize           : '5'
+zbx_agt_Server                : '{{ zbx_server }}'
+zbx_agt_ServerActive          : '{{ zbx_active_server }}'
+zbx_agt_Hostname              : '{{ ansible_hostname }}'
+zbx_agt_EnableRemoteCommands  : '1'
+zbx_agt_LogRemoteCommands     : '0'
 
-#PidFile                : '/var/run/zabbix/zabbix_agentd.pid'
-#LogFile                : '/var/log/zabbix/zabbix_agentd.log'
-zbx_agt_LogFileSize            : '5'
-zbx_agt_Server                 : '127.0.0.1'
-zbx_agt_ServerActive           : '127.0.0.1'
-zbx_agt_Hostname               : '{{ ansible_hostname }}'
-zbx_agt_EnableRemoteCommands   : '1'
-zbx_agt_LogRemoteCommands      : '0'

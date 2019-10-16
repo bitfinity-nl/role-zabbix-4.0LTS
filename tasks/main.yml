@@ -9,8 +9,16 @@
 #   server/agent/proxy on Ubuntu 18.04LTS.
 #
 
-- name: "For OS: Ubuntu 18.04LTS, Arch: amd64"
+- name: "Zabbix server (Ubuntu)"
   import_tasks: server/zabbix-server.yml
   when:
     - ansible_distribution_version == "18.04"
     - ansible_architecture == "x86_64"
+    - zbx_type == 'server'
+
+- name: "Zabbix Agent (Ubuntu)"
+  import_tasks: agent/ubuntu/zbx-agent-ubt1804.yml
+  when:
+    - ansible_distribution_version == "18.04"
+    - ansible_architecture == "x86_64"
+    - zbx_type == 'agent'
