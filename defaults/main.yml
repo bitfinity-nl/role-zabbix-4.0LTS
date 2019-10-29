@@ -134,20 +134,18 @@ zbx_agt_EnableRemoteCommands  : '1'
 zbx_agt_LogRemoteCommands     : '0'
 
 
-# -- Zabbix Agent WIndows - specific settings --
+# -- Zabbix Agent Windows - specific settings (Zip version)--
 # 
 # Variable(s):
-#   zbx_pkg_local_repository : '{{ ansible_env.ALLUSERSPROFILE }}\\ansible\cached\\zabbix-agent' 
-#   zbx_win_agt_url          : 'https://www.zabbix.com/downloads/4.0.13/zabbix_agent-4.0.13-win-amd64-openssl.msi' 
-#   zbx_win_agt_product_id   : '{9D68823B-02AD-4EEF-8DFF-BE903D09AF6C}'
-#   zbx_win_agt_arguments    : 'SERVER={{ zbx_agt_Server }} SERVERACTIVE={{ zbx_agt_ServerActive }} HOSTNAME={{ zbx_agt_Hostname }} ENABLEREMOTECOMMANDS={{ zbx_agt_EnableRemoteCommands }}'
+#   zbx_pkg_local_repository   : '{{ ansible_env.ALLUSERSPROFILE }}\\ansible\cached\\zabbix-agent' 
+#   zbx_agt_win_src            : 'https://www.zabbix.com/downloads/4.0.14/zabbix_agents-4.0.14-win-amd64-openssl.zip'
+#   zbx_agt_checksum           : '552f5146f12aed4217f9d0408f29e4d6'
+#   zbx_agt_checksum_algorithm : 'md5'
 #
 # Comment:
 #   See Zabbix documentation for more specific arguments.
 #
-zbx_pkg_local_repository : '{{ ansible_env.ALLUSERSPROFILE }}\\ansible\cached\\zabbix-agent' 
-zbx_win_agt_url          : 'https://www.zabbix.com/downloads/4.0.13/zabbix_agent-4.0.13-win-amd64-openssl.msi' 
-zbx_win_agt_product_id   : '{9D68823B-02AD-4EEF-8DFF-BE903D09AF6C}'
-zbx_win_agt_arguments    : 'SERVER={{ zbx_agt_Server }} SERVERACTIVE={{ zbx_agt_ServerActive }} HOSTNAME={{ zbx_agt_Hostname }} ENABLEREMOTECOMMANDS={{ zbx_agt_EnableRemoteCommands }}'
-
-
+zbx_pkg_local_repository   : '{{ ansible_env.ALLUSERSPROFILE }}\\ansible\cached\\zabbix-agent' 
+zbx_agt_win_src            : 'https://www.zabbix.com/downloads/4.0.14/zabbix_agents-4.0.14-win-amd64-openssl.zip'
+zbx_agt_checksum           : '552f5146f12aed4217f9d0408f29e4d6'
+zbx_agt_checksum_algorithm : 'md5'
