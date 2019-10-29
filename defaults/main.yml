@@ -133,3 +133,21 @@ zbx_agt_Hostname              : '{{ ansible_hostname }}'
 zbx_agt_EnableRemoteCommands  : '1'
 zbx_agt_LogRemoteCommands     : '0'
 
+
+# -- Zabbix Agent WIndows - specific settings --
+# 
+# Variable(s):
+#   zbx_pkg_local_repository : '{{ ansible_env.ALLUSERSPROFILE }}\\ansible\cached\\zabbix-agent' 
+#   zbx_win_agt_url          : 'https://www.zabbix.com/downloads/4.0.13/zabbix_agent-4.0.13-win-amd64-openssl.msi' 
+#   zbx_win_agt_product_id   : '{9D68823B-02AD-4EEF-8DFF-BE903D09AF6C}'
+#   zbx_win_agt_arguments    : 'SERVER={{ zbx_agt_Server }} SERVERACTIVE={{ zbx_agt_ServerActive }} HOSTNAME={{ zbx_agt_Hostname }} ENABLEREMOTECOMMANDS={{ zbx_agt_EnableRemoteCommands }}'
+#
+# Comment:
+#   See Zabbix documentation for more specific arguments.
+#
+zbx_pkg_local_repository : '{{ ansible_env.ALLUSERSPROFILE }}\\ansible\cached\\zabbix-agent' 
+zbx_win_agt_url          : 'https://www.zabbix.com/downloads/4.0.13/zabbix_agent-4.0.13-win-amd64-openssl.msi' 
+zbx_win_agt_product_id   : '{9D68823B-02AD-4EEF-8DFF-BE903D09AF6C}'
+zbx_win_agt_arguments    : 'SERVER={{ zbx_agt_Server }} SERVERACTIVE={{ zbx_agt_ServerActive }} HOSTNAME={{ zbx_agt_Hostname }} ENABLEREMOTECOMMANDS={{ zbx_agt_EnableRemoteCommands }}'
+
+

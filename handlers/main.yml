@@ -16,7 +16,6 @@
   reboot:
 
 - name: "enable_restart_zabbix-server"
-#  service:
   systemd:
     name: "{{ item }}"
     state: restarted
@@ -34,9 +33,13 @@
     masked: no
 
 - name: "restart_apache2"
-#  service:
   systemd:
     name: apache2
     state: restarted
     enabled: yes
     masked: no
+
+- name: "restart_win_zbx_agent"
+  win_service:
+    name: Zabbix Agent
+    state: restarted

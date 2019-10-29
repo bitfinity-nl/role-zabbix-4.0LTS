@@ -22,3 +22,10 @@
     - ansible_distribution_version == "18.04"
     - ansible_architecture == "x86_64"
     - zbx_type == 'agent'
+
+- name: "Zabbix Agent (Windows 64bit)"
+  import_tasks: agent/windows/win-64bit-check.yml
+  when:
+    - ansible_os_family == "Windows"
+    - ansible_architecture == "64-bit"
+    - zbx_type == 'agent'
