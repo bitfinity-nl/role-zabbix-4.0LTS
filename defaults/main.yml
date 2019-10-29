@@ -122,9 +122,10 @@ zbx_srv_CacheSize               : '64M'
 #   zbx_agt_LogFileSize            : '5'                       # Maximum size of log file in MB.
 #   zbx_agt_Server                 : '127.0.0.1'               # Set IP or hostname of Zabbix (proxy) servers.
 #   zbx_agt_ServerActive           : '127.0.0.1'               # Set IP or hostname of Zabbix (proxy) servers. 
-#   zbx_agt_Hostname               : '{{ ansible_hostname }}'
-#   zbx_agt_EnableRemoteCommands   : '1'
-#   zbx_agt_LogRemoteCommands      : '0'
+#   zbx_agt_Hostname               : '{{ ansible_hostname }}'  # Set hostname.
+#   zbx_agt_EnableRemoteCommands   : '1'                       # Used for sending remote commands.
+#   zbx_agt_LogRemoteCommands      : '0'                       # Used for loging remote commands.
+#   zbx_agt_HostMetadata           : 'Server'                  # Used for autoregistration. 
 #
 zbx_agt_LogFileSize           : '5'
 zbx_agt_Server                : '{{ zbx_server }}'
@@ -132,6 +133,7 @@ zbx_agt_ServerActive          : '{{ zbx_active_server }}'
 zbx_agt_Hostname              : '{{ ansible_hostname }}'
 zbx_agt_EnableRemoteCommands  : '1'
 zbx_agt_LogRemoteCommands     : '0'
+zbx_agt_HostMetadata          : 'Server'
 
 
 # -- Zabbix Agent Windows - specific settings (Zip version)--
