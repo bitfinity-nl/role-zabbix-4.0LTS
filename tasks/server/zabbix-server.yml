@@ -39,7 +39,7 @@
 - name: "Create initial database"
   mysql_db:
     name: "{{ zbx_mysql_dbname }}"
-    encoding: utf8
+    encoding: utf8_bin
     state: present
     login_user: "{{ zbx_mysql_root }}"
     login_password: "{{ zbx_mysql_root_pwd }}"
